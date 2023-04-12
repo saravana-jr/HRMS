@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    
+</head>
+<body class="m-0 p-0">
+    <header class="bg-white text-black py-4 shadow-md">
+      <div class="container px-4">
+        <img src="https://peopleconnect.cloudberry360.com/media/cloudberry360-technologies-pvt-ltd/photo/cloudberry360_logo.png" width="200"> 
+      </div>
+    </header>
+    <div class="container grid grid-cols-12 gap-4">
+      <aside class="col-span-2 bg-blue-500 py-4 text-white h-screen">
+        <nav>
+          <ul>
+            <li class="p-3 font-bold hover:bg-blue-400">
+              <a href="#">Leave Request</a>
+            </li>
+            <li class="p-3 font-bold hover:bg-blue-400">
+              <a href="#">Holiday</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="col-span-10 bg-white py-4 mt-1">
+        <h2 class="text-xl font-bold mb-4 animate-pulse">Request sent</h2>
+        <div class="w-64">
+        <form method="POST" action="{% url 'sent' %}">
+          {% csrf_token %}
+          
+          
+          
+          <button class="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">Delete Leave</button>
+        </form>
+        </div>
+
+      </main>
+    </div>
+
+    <script src="{% static 'peopleconnect/design.html' %}"></script>
+  </body>
+</html>
