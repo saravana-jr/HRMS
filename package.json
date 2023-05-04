@@ -45,7 +45,7 @@
   "watch": "npm-watch",
   
     
-  "build": "postcss static/css/main.css -o static/css/main.min.css",
+  "build": "npx tailwindcss build static/css/main.css -o static/css/main-tailwind.css && postcss static/css/main-tailwind.css -o static/css/main.min.css",
   
     
   "test": "echo \"Error: no test specified\" && exit 1"

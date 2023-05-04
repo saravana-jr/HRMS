@@ -1,33 +1,75 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect
 from .models import LeaveRequest
-# from .forms import LeaveRequestForm
 
-# def design(request):
-#     return render(request,"peopleconnect/design.html")
+from .forms import LeaveRequestForm
 
-
-
-def design(request):
+def Leave(request):
+    leave_requests = LeaveRequest.objects.all()
+    context = {'leave_requests': leave_requests}
+    return render(request, 'peopleconnect/Leave.html', context)
+    
+    
+def new_form(request):
     if request.method == 'POST':
-        leave_type = request.POST['leave_type']
-        from_date = request.POST['start-date']
-        to_date = request.POST['to-date']
-        reason = request.POST['reason']
-        LeaveRequest.objects.create(leave_type=leave_type, from_date=from_date, to_date=to_date, reason=reason)
-        return render(request, 'peopleconnect/sent.html')
+        form=LeaveRequestForm(request.POST)
+        if form.is_valid():
+            leave_request=form.save()
+            leave_requests = LeaveRequest.objects.all()
+            context = {'leave_requests': leave_requests}
+            return render(request, 'peopleconnect/Leave.html',context)
+        else:
+            return render(request, 'peopleconnect/new.html', {"form": form})
+    
     else:
-        return render(request, 'peopleconnect/design.html')
+        form = LeaveRequestForm()
+        return render(request, 'peopleconnect/new.html', {"form": form})
+    
+    
+def edit(request,leave_id):
+    
+    leave_request = LeaveRequest.objects.get(id=leave_id)
+    if request.method == 'POST':
+        form=LeaveRequestForm(request.POST,instance=leave_request)
+        if form.is_valid():
+            leave_request=form.save()
+            return redirect('Leave')
+    # if request.method == 'POST':
+    #     leave_request.leave_type = request.POST.get('leave_type')
+    #     leave_request.description = request.POST.get('Description')
+    #     leave_request.No_of_Leaves = request.POST.get('No.of.Leaves')
+    #     leave_request.save()
+    #     return redirect('Leave')
+    else:
+        form = LeaveRequestForm(instance=leave_request)
+        context = {'form': form, 'leave_request': leave_request}
+        return render(request, 'peopleconnect/edit.html',context)
+    
+
+def view(request,leave_id):
+    leave_requests=get_object_or_404(LeaveRequest,id=leave_id)
+    context={'leave_requests': leave_requests}
+    return render(request, 'peopleconnect/view.html',context)
+    
+def delete(request,leave_id):
+    leave_request=get_object_or_404(LeaveRequest,id=leave_id)
+    if request.method == 'POST':
+        leave_request.delete()
+        return redirect('Leave')
+
+    else:
+        return render(request, 'peopleconnect/delete.html')
+        
+
+    
+    
     
 # def leave_submitted(request):
-#     return render(request, 'peopleconnect/sent.html')
-    
-def leave_submitted(request):
-    if request.method == 'POST':
-        LeaveRequest.objects.all().delete()
-        return render(request,'peopleconnect/design.html')
-    else:
-        return render(request, 'peopleconnect/sent.html')
+#     if request.method == 'POST':
+#         LeaveRequest.objects.all().delete()
+#         return render(request,'peopleconnect/design.html')
+#     else:
+#         return render(request, 'peopleconnect/sent.html')
 
 
 # def design(request):

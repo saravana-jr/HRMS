@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main-tailwind.css' %}">
+    <!-- <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    /> -->
+    
+</head>
+<body class="m-0 p-0">
+  <header class="bg-white text-black py-4 shadow-md">
+    <div class="container px-1">
+      <img src="https://peopleconnect.cloudberry360.com/media/cloudberry360-technologies-pvt-ltd/photo/cloudberry360_logo.png" width="200"> 
+    </div>
+  </header>
+
+  <div class="container grid grid-cols-12 gap-4">
+    <aside class="col-span-2 bg-blue-500 py-4 text-white h-screen">
+      <nav>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+            <svg class="h-5 w-5 text-white-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="24" y1="24" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input class="block w-full pl-10 pr-3 py-2 bg-blue-500 placeholder-white-500 text-white-900 focus:outline-none focus:border-blue-500 focus:placeholder-white-400 focus:shadow-outline-blue transition duration-150 ease-in-out" type="text" placeholder="Search">
+
+        </div>
+        <ul>
+          <li class="p-3 font-bold hover:bg-blue-400">
+            <a href="{% url 'Leave' %}">Leave Request</a>
+          </li>
+          <li class="p-3 font-bold hover:bg-blue-400">
+            <a href="#">Holiday</a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+   
+    
+   {% block content %}
+   
+   {% endblock %}
+  </div>
+</body>
+</html>
